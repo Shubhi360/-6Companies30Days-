@@ -1,0 +1,25 @@
+char* getHint(char* secret, char* guess) {
+    int size = strlen(secret);
+    char* result = (char *)malloc(10 * sizeof(char)); 
+    int bulls = 0, cow = 0;
+
+    int secretCount[10] = {0}; 
+    int guessCount[10] = {0}; 
+
+    for(int i = 0; i < size; i++) {
+        if(secret[i] == guess[i]) {
+            bulls++;
+        } else {
+            secretCount[secret[i] - '0']++;
+            guessCount[guess[i] - '0']++;
+        }
+    }
+
+    for (int i = 0; i < 10; i++) {
+        cow += (secretCount[i] < guessCount[i]) ? secretCount[i] : guessCount[i];
+    }
+
+    snprintf(result, 10, "%dA%dB", bulls, cow);
+
+    return result;
+}
